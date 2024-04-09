@@ -1,14 +1,33 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using IntexBrickwell.Data;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var keyVaultUri = "https://intexkv.vault.azure.net/";
+builder.Configuration.AddAzureKeyVault(new Uri(keyVaultUri), new DefaultAzureCredential());
+
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
-                       throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+// Fetch the database password secret from the configuration
+var dbPassword = builder.Configuration["DatabasePassword"]; // Ensure this matches the name of your secret in Azure Key Vault
+
+// Retrieve the connection string without the password
+var baseConnectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+                           throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+// Replace the placeholder in the connection string with the actual password
+var connectionString = baseConnectionString.Replace("{PasswordPlaceholder}", dbPassword);
+
+
+// Configure your DbContext to use SQL Server with the updated connection string and enable transient error retry logic
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(connectionString));
+    options.UseSqlServer(connectionString, sqlServerOptions => sqlServerOptions.EnableRetryOnFailure(
+        maxRetryCount: 5, // Maximum number of retry attempts
+        maxRetryDelay: TimeSpan.FromSeconds(30), // Maximum delay between retries
+        errorNumbersToAdd: null))); // SQL error numbers to consider for retries, null for defaults
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -34,11 +53,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
-
 app.Run();
