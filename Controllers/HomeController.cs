@@ -39,7 +39,7 @@ public class HomeController : Controller
 
         try
         {
-            _session = new InferenceSession("/Users/brysonlindsey/Documents/GitHub/IntexBrickwell/decision_tree_model.onnx");
+            _session = new InferenceSession("C:\\Users\\carolineconley\\Source\\Repos\\IntexBrickwell\\decision_tree_model.onnx");
             
         }
         catch (Exception ex)
