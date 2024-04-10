@@ -7,9 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - IntexBrickwell</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/IntexBrickwell.styles.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/CookieConsent.css" />
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="css/site.css" rel="stylesheet" />
     <meta name="csrf-token" content="@Antiforgery.GetAndStoreTokens(Context).RequestToken" />
 
 </head>
@@ -41,22 +43,19 @@
 
     </nav>
 </header>
-<div class="container">
+<div class="container content">
     <main role="main" class="pb-3">
         @RenderBody()
     </main>
 </div>
 
 <footer class="border-top footer text-muted">
-        <div class="cookieConsentContainer" id="cookieConsentContainer" hidden>
-            <p>This website uses cookies to ensure you get the best experience on our website.</p>
-            <button class="btn btn-primary" id="acceptCookies">Accept</button>
-            <button class="btn btn-danger" id="declineCookies">Decline</button>
-        </div>
-        <script src="~/js/CookieConsent.js"></script> <!-- Path to your JS file -->
-    <div class="container">
-        &copy; 2024 - IntexBrickwell - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <div class="cookieConsentContainer" id="cookieConsentContainer" hidden>
+        <p>This website uses cookies to ensure you get the best experience on our website.</p>
+        <button class="btn btn-primary" id="acceptCookies">Accept</button>
+        <button class="btn btn-danger" id="declineCookies">Decline</button>
     </div>
+    <script src="~/js/CookieConsent.js"></script> <!-- Path to your JS file -->
 </footer>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
