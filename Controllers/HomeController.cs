@@ -39,8 +39,16 @@ public class HomeController : Controller
 
         try
         {
+<<<<<<< HEAD
             // _session = new InferenceSession("C:\\Users\\carolineconley\\Source\\Repos\\IntexBrickwell\\decision_tree_model.onnx");
  
+=======
+            // _session = new InferenceSession("/Users/brysonlindsey/Documents/GitHub/IntexBrickwell/decision_tree_model.onnx");
+            // _session = new InferenceSession("C:\\Users\\carolineconley\\Source\\Repos\\IntexBrickwell\\decision_tree_model.onnx");
+            
+            _session = new InferenceSession("C:\\Users\\mikaylarandall\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
+            // _session = new InferenceSession("C:\\Users\\Tiffany\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
+>>>>>>> 81d6f6d77e5724faf69c92a9ab8af3276eb2d80c
             
         }
         catch (Exception ex)
@@ -154,7 +162,31 @@ public class HomeController : Controller
 
         return View(predictions);
     }
-    
+
+    public IActionResult Products(int pageNum) // don't ever name pageNum page -- means something to dotnet
+    {
+        int pageSize = 5;
+
+        var productData = new ProductListViewModel
+        {
+            Products = _productRepository.Products
+            .OrderBy(x => x.Name)
+            .Skip((pageNum - 1) * pageSize)
+            .Take(pageSize),
+
+            PaginationInfo = new PaginationInfo
+            {
+                CurrentPage = pageNum,
+                ItemsPerPage = pageSize,
+                TotalItems = _productRepository.Products.Count()
+            }
+
+        };
+
+        return View(productData);
+    }
+
+
     public IActionResult Index(int page = 1, int pageSize = 4)
     {
         var totalItems = _productRepository.Products.Count();
