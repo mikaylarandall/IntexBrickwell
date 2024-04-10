@@ -1,7 +1,7 @@
 @model IEnumerable<IntexBrickwell.Models.FraudPrediction>
 
 @{
-    ViewData["Title"] = "Predictions";
+    ViewData["Title"] = "Review Orders";
     var class_type_dict = new Dictionary<int, string>
     {
         {0, "Not Fraud"},
@@ -75,6 +75,52 @@
                     </tr>
                 }
             </tbody>
+
+    </table>
+
+    <br />
+    <br />
+
+    <h2>Incorrect Predictions</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>CustomerID</th>
+                <th>Time</th>
+                <th>Amount</th>
+                <th>Day of Week</th>
+                <th>Entry Mode</th>
+                <th>Transaction Type</th>
+                <th>Country of Transaction</th>
+                <th>Shipping Address</th>
+                <th>Bank</th>
+                <th>Type of Card</th>
+                <th>Original Fraud Label</th>
+                <th class="prediction-cell">Prediction</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                if (class_type_dict[(int)item.Order.Fraud] != item.Prediction)
+                {
+                    <tr>
+                        <td>@item.Order.CustomerId</td>
+                    <td>@item.Order.Time</td>
+                    <td>@item.Order.Amount</td>
+                    <td>@item.Order.DayOfWeek</td>
+                    <td>@item.Order.EntryMode</td>
+                    <td>@item.Order.TypeOfTransaction</td>
+                    <td>@item.Order.CountryOfTransaction</td>
+                    <td>@item.Order.ShippingAddress</td>
+                    <td>@item.Order.Bank</td>
+                    <td>@item.Order.TypeOfCard</td>
+                    <td>@class_type_dict[(int)item.Order.Fraud]</td>
+                    <td class="@((item.Prediction == "Fraud") ? "fraud-prediction" : "not-fraud-prediction")">@item.Prediction</td>
+                </tr>
+                }
+            }
+        </tbody>
 
     </table>
 </div>
