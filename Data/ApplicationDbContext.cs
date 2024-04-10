@@ -16,7 +16,7 @@ public class ApplicationDbContext : IdentityDbContext
     public virtual DbSet<Order> Orders { get; set; }
     public virtual DbSet<Product> Products { get; set; }
     public virtual DbSet<User> Users { get; set; }
-    public virtual DbSet<FraudPrediction> FraudPredictions { get; set; }
+   //  public virtual DbSet<FraudPrediction> FraudPredictions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
