@@ -1,0 +1,42 @@
+@model CartViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- head contents (omitted for brevity) -->
+</head>
+<body>
+<div class="container">
+    <h2>Your Cart</h2>
+    @if (Model.CartItems.Count == 0)
+    {
+        <p>Your cart is empty.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+                <tr>
+                    <td>@item.ItemName</td>
+                    <td>$@item.ItemPrice</td>
+                    <td>@item.Quantity</td>
+                    <td>$@(item.ItemPrice * item.Quantity)</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        <h3>Total: $@Model.TotalPrice</h3>
+    }
+</div>
+</body>
+</html>

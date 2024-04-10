@@ -23,7 +23,6 @@ var baseConnectionString = builder.Configuration.GetConnectionString("DefaultCon
 // Replace the placeholder in the connection string with the actual password
 var connectionString = baseConnectionString.Replace("{PasswordPlaceholder}", dbPassword);
 
-
 // Configure your DbContext to use SQL Server with the updated connection string and enable transient error retry logic
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString, sqlServerOptions => sqlServerOptions.EnableRetryOnFailure(
@@ -63,6 +62,14 @@ builder.Services.AddScoped<IProductRepository, EFProductRepository>();
 builder.Services.AddScoped<ICustomerRepository, EFCustomerRepository>();
 builder.Services.AddScoped<ILineItemRepository, EFLineItemRepository>();
 
+// Register session services
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(20); // Set session timeout
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true; // Make session cookie essential
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -73,12 +80,14 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+// Use session middleware
+app.UseSession(); // This line must be added before UseRouting()
 
 app.UseRouting();
 
