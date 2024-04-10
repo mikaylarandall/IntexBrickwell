@@ -42,21 +42,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Products">Products</a>
                         </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ProductRecommendation">Recommend</a>
+                    </li>
                 </ul>
                 <!-- Invoke the Cart View Component here -->
                 @await Component.InvokeAsync("Cart")
                 <!-- This partial view represents the login or account related links -->
                 <partial name="_LoginPartial"/>
-                
             </div>
         </div>
-        
 
     </nav>
 </header>
 <div class="container content">
     <main role="main" class="pb-3">
-        <br />
         @RenderBody()
     </main>
 </div>

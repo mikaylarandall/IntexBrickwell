@@ -1,0 +1,11 @@
+@model List<IntexBrickwell.Models.ProductRecommendation>
+
+<h2>Product Recommendations</h2>
+
+@foreach (var recommendation in Model)
+{
+    <div>
+        <h3>@recommendation.ProductName</h3>
+        // Display other properties of each recommendation as needed
+    </div>
+}

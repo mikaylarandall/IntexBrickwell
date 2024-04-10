@@ -21,6 +21,7 @@ public class HomeController : Controller
     private readonly ILineItemRepository _lineItemRepository;
     private readonly InferenceSession _session;
     private readonly ApplicationDbContext _context;
+    private readonly IRecommendationRepository _recommendationRepository;
 
     public HomeController(
         IOrderRepository orderRepository, 
@@ -28,7 +29,8 @@ public class HomeController : Controller
         IUserRepository userRepository,
         ICustomerRepository customerRepository,
         ILineItemRepository lineItemRepository,
-        ApplicationDbContext context)
+        ApplicationDbContext context,
+        IRecommendationRepository recommendationRepository)
     {
         _orderRepository = orderRepository;
         _productRepository = productRepository;
@@ -36,19 +38,16 @@ public class HomeController : Controller
         _customerRepository = customerRepository;
         _lineItemRepository = lineItemRepository;
         _context = context;
+        _recommendationRepository = recommendationRepository;
 
         try
         {
-<<<<<<< HEAD
-            // _session = new InferenceSession("C:\\Users\\carolineconley\\Source\\Repos\\IntexBrickwell\\decision_tree_model.onnx");
- 
-=======
-            // _session = new InferenceSession("/Users/brysonlindsey/Documents/GitHub/IntexBrickwell/decision_tree_model.onnx");
+
+            _session = new InferenceSession("/Users/brysonlindsey/Documents/GitHub/IntexBrickwell/decision_tree_model.onnx");
             // _session = new InferenceSession("C:\\Users\\carolineconley\\Source\\Repos\\IntexBrickwell\\decision_tree_model.onnx");
             
-            _session = new InferenceSession("C:\\Users\\mikaylarandall\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
+            // _session = new InferenceSession("C:\\Users\\mikaylarandall\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
             // _session = new InferenceSession("C:\\Users\\Tiffany\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
->>>>>>> 81d6f6d77e5724faf69c92a9ab8af3276eb2d80c
             
         }
         catch (Exception ex)
@@ -189,11 +188,25 @@ public class HomeController : Controller
 
     public IActionResult Index(int page = 1, int pageSize = 4)
     {
-        var totalItems = _productRepository.Products.Count();
+        // Joining Products with LineItems to calculate average rating
+        var productRatings = _productRepository.Products
+            .GroupJoin(
+                _lineItemRepository.LineItems, // Assuming you have a repository for LineItems
+                product => product.ProductId,
+                lineItem => lineItem.ProductId,
+                (product, lineItems) => new {
+                    Product = product,
+                    AverageRating = lineItems.Average(li => (int?)li.Rating) ?? 0 // Cast to int? to handle possible null ratings and default to 0 if no ratings
+                })
+            .OrderByDescending(pr => pr.AverageRating) // Order by average rating descending
+            .ThenBy(pr => pr.Product.ProductId) // Secondary sort by ProductId for consistent ordering
+            .Select(pr => pr.Product)
+            .Take(8);
+
+        var totalItems = productRatings.Count();
         var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
-        var products = _productRepository.Products
-            .OrderBy(i => i.ProductId)
+        var products = productRatings
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToList();
@@ -211,6 +224,7 @@ public class HomeController : Controller
 
         return View(model);
     }
+
     
     public IActionResult AddToCart(int productID)
     {
@@ -255,5 +269,10 @@ public class HomeController : Controller
     public IActionResult Aboutus()
     {
         return View();
+    }
+    public IActionResult ProductRecommendation()
+    {
+        var productRecommendations = _recommendationRepository.ProductRecommendation.ToList();
+        return View(productRecommendations);
     }
 }

@@ -67,6 +67,7 @@ builder.Services.AddScoped<IUserRepository, EFUserRepository>();
 builder.Services.AddScoped<IProductRepository, EFProductRepository>();
 builder.Services.AddScoped<ICustomerRepository, EFCustomerRepository>();
 builder.Services.AddScoped<ILineItemRepository, EFLineItemRepository>();
+builder.Services.AddScoped<IRecommendationRepository, EFRecommendationRepository>();
 
 // Register session services
 builder.Services.AddSession(options =>
