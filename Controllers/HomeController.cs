@@ -39,11 +39,8 @@ public class HomeController : Controller
 
         try
         {
-<<<<<<< HEAD
-            _session = new InferenceSession("C:\\Users\\carolineconley\\Source\\Repos\\IntexBrickwell\\decision_tree_model.onnx");
-=======
-            _session = new InferenceSession("C:\\Users\\mikaylarandall\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
->>>>>>> 41e09e22948f79b3b9740d5a275ddb2d6bf5ab31
+            // _session = new InferenceSession("C:\\Users\\carolineconley\\Source\\Repos\\IntexBrickwell\\decision_tree_model.onnx");
+ 
             
         }
         catch (Exception ex)
