@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Antiforgery
+@inject IAntiforgery Antiforgery
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -8,10 +10,13 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/IntexBrickwell.styles.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/CookieConsent.css" />
+    <meta name="csrf-token" content="@Antiforgery.GetAndStoreTokens(Context).RequestToken" />
+
 </head>
+
 <body>
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm custom-navbar-color">
         <div class="container-fluid">
             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">IntexBrickwell</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -27,9 +32,13 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
                 </ul>
+                <!-- Invoke the Cart View Component here -->
+                @await Component.InvokeAsync("Cart")
+                <!-- This partial view represents the login or account related links -->
                 <partial name="_LoginPartial"/>
             </div>
         </div>
+
     </nav>
 </header>
 <div class="container">
@@ -52,6 +61,28 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        function addToCart(productId) {
+            fetch(`/Home/AddToCart?productId=${productId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': csrfToken
+                },
+                body: JSON.stringify({ productId: productId })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('cart-quantity').innerText = data.cartItemCount;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    });
+</script>
+
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

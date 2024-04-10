@@ -17,95 +17,105 @@
     <link href="css/site.css" rel="stylesheet" />
 </head>
 <body>
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="#!">Start Bootstrap</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#!">All Products</a></li>
-                            <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                            <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <form class="d-flex" method="get" action="@Url.Action("CheckoutCart", "Home")">
-                    <button class="btn btn-outline-dark" type="submit">
-                        <i class="bi-cart-fill me-1"></i>
-                        Cart
-                        <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart-quantity">@ViewBag.CartItemCount</span>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </nav>
+    @* <!-- Navigation--> *@
+    @* <nav class="navbar navbar-expand-lg navbar-light bg-light"> *@
+    @*     <div class="container px-4 px-lg-5"> *@
+    @*         <a class="navbar-brand" href="#!">Start Bootstrap</a> *@
+    @*         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button> *@
+    @*         <div class="collapse navbar-collapse" id="navbarSupportedContent"> *@
+    @*             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4"> *@
+    @*                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li> *@
+    @*                 <li class="nav-item"><a class="nav-link" href="#!">About</a></li> *@
+    @*                 <li class="nav-item dropdown"> *@
+    @*                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a> *@
+    @*                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown"> *@
+    @*                         <li><a class="dropdown-item" href="#!">All Products</a></li> *@
+    @*                         <li><hr class="dropdown-divider" /></li> *@
+    @*                         <li><a class="dropdown-item" href="#!">Popular Items</a></li> *@
+    @*                         <li><a class="dropdown-item" href="#!">New Arrivals</a></li> *@
+    @*                     </ul> *@
+    @*                 </li> *@
+    @*             </ul> *@
+    @*             <form class="d-flex" method="get" action="@Url.Action("CheckoutCart", "Home")"> *@
+    @*                 <button class="btn btn-outline-dark" type="submit"> *@
+    @*                     <i class="bi-cart-fill me-1"></i> *@
+    @*                     Cart *@
+    @*                     <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart-quantity">@ViewBag.CartItemCount</span> *@
+    @*                 </button> *@
+    @*             </form> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* </nav> *@
     <!-- Header-->
     <header class="bg-dark py-5">
-        <div class="container px-4 px-lg-5 my-5">
+        <div class="container px-3 px-lg-5 my-5">
             <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">Shop in style</h1>
-                <p class="lead fw-normal text-white-50 mb-0">With this shop homepage template</p>
+                <h1 class="display-4 fw-bolder">Welcome to Brickwell Legos!</h1>
+                <p class="lead fw-normal text-white-50 mb-0">Find your favorite Lego sets here. Let the building begin!</p>
             </div>
         </div>
     </header>
+    
+    <div class="container px-4 px-lg-5 my-5" style="background-color: #300c54;">
+        <br/>
+        <div class="text-center text-white">
+            <h1 class="display-8 fw-bolder">About Aurora Brickwell</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Every since Aurora was a little girl, she knew that she wanted to be a creative. Legos were her first toy that she fell in love with and she hopes you fall in love with Legos too.</p>
+        </div>
+        <br/>
+    </div>
     <!-- Section for displaying items -->
-<section class="py-5">
-    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-        @foreach (var item in Model.Products)
-        {
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-top" src="@item.ImgLink" alt="Product Image" />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Product name-->
-                            <h5 class="fw-bolder">@item.Name</h5>
-                            <!-- Product price-->
-                            $@item.Price
+    <section class="py-5">
+        <h2>Featured Sets</h2>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            @foreach (var item in Model.Products)
+            {
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" src="@item.ImgLink" alt="Product Image"/>
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder">@item.Name</h5>
+                                <!-- Product price-->
+                                $@item.Price
+                            </div>
                         </div>
-                    </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center">
-                            <button class="btn btn-outline-dark mt-auto add-to-cart-btn" data-item-id="@item.ProductId">Add to cart</button>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <button class="btn btn-outline-dark mt-auto add-to-cart-btn" data-item-id="@item.ProductId">Add to cart</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
-    <!-- Pagination -->
-    <div class="d-flex justify-content-center">
-        @if (Model.CurrentPage > 1)
-        {
-            <a class="btn btn-primary mr-2" href="@Url.Action("Index", new { page = Model.CurrentPage - 1 })">Previous</a>
-        }
-        @for (int pageIndex = 1; pageIndex <= Model.TotalPages; pageIndex++)
-        {
-            if (pageIndex == Model.CurrentPage)
-            {
-                <span class="btn btn-secondary disabled">@pageIndex</span>
             }
-            else
+        </div>
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center">
+            @if (Model.CurrentPage > 1)
             {
-                <a class="btn btn-primary" href="@Url.Action("Index", new { page = pageIndex })">@pageIndex</a>
+                <a class="btn btn-primary mr-2" href="@Url.Action("Index", new { page = Model.CurrentPage - 1 })">Previous</a>
             }
-        }
-        @if (Model.CurrentPage < Model.TotalPages)
-        {
-            <a class="btn btn-primary ml-2" href="@Url.Action("Index", new { page = Model.CurrentPage + 1 })">Next</a>
-        }
-    </div>
-</section>
+            @for (int pageIndex = 1; pageIndex <= Model.TotalPages; pageIndex++)
+            {
+                if (pageIndex == Model.CurrentPage)
+                {
+                    <span class="btn btn-secondary disabled">@pageIndex</span>
+                }
+                else
+                {
+                    <a class="btn btn-primary" href="@Url.Action("Index", new { page = pageIndex })">@pageIndex</a>
+                }
+            }
+            @if (Model.CurrentPage < Model.TotalPages)
+            {
+                <a class="btn btn-primary ml-2" href="@Url.Action("Index", new { page = Model.CurrentPage + 1 })">Next</a>
+            }
+        </div>
+    </section>
     <!-- Footer-->
     <footer class="py-5 bg-dark">
         <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>

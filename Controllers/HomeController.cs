@@ -81,6 +81,8 @@ public class HomeController : Controller
         // For AJAX: Return JSON including the updated cart item count
         return Json(new { cartItemCount = cart.CartItems.Sum(c => c.Quantity) });
     }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public IActionResult CheckoutCart()
     {
         var cart = HttpContext.Session.GetObjectFromJson<CartViewModel>("Cart") ?? new CartViewModel { CartItems = new List<CartItem>() };

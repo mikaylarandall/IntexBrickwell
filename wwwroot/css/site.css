@@ -103,6 +103,9 @@ body {
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+.custom-navbar-color {
+    background-color: #FFD700 !important;
+}
 
 hr {
     margin: 1rem 0;
@@ -615,7 +618,7 @@ progress {
 }
 
     .blockquote-footer::before {
-        content: "— ";
+        content: "ï¿½ ";
     }
 
 .img-fluid {
