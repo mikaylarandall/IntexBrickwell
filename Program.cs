@@ -4,6 +4,8 @@ using IntexBrickwell.Data;
 using Azure.Identity;
 using IntexBrickwell.Middleware;
 using Azure.Security.KeyVault.Secrets;
+using IntexBrickwell.Models;
+using ApplicationDbContext = IntexBrickwell.Data.ApplicationDbContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +34,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<IntexBrickwell.Data.ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddHsts(options =>
@@ -54,6 +56,12 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredLength = 10;
     options.Password.RequiredUniqueChars = 1;
 });
+
+builder.Services.AddScoped<IOrderRepository, EFOrderRepository>();
+builder.Services.AddScoped<IUserRepository, EFUserRepository>();
+builder.Services.AddScoped<IProductRepository, EFProductRepository>();
+builder.Services.AddScoped<ICustomerRepository, EFCustomerRepository>();
+builder.Services.AddScoped<ILineItemRepository, EFLineItemRepository>();
 
 var app = builder.Build();
 
