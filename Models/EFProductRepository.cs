@@ -8,5 +8,5 @@ public class EFProductRepository : IProductRepository
     {
         _context = temp;
     }
-    public IQueryable<Product> Products => _context.Products;
+    public IEnumerable<Product> Products => _context.Products;
 }
