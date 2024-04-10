@@ -1,0 +1,80 @@
+@model IEnumerable<IntexBrickwell.Models.FraudPrediction>
+
+@{
+    ViewData["Title"] = "Predictions";
+    var class_type_dict = new Dictionary<int, string>
+    {
+        {0, "Not Fraud"},
+        {1, "Fraud"}
+    };
+}
+
+<style>
+    .table-responsive {
+        overflow-x: auto;
+    }
+    .full-width-table {
+        margin-left: -50px; 
+        margin-right: 0;
+
+    }
+    .table {
+        width: auto; 
+        margin-bottom: 0; 
+    }
+    .prediction-cell {
+        background-color: #e0f2f1;
+    }
+    .fraud-prediction {
+        background-color: #f8d7da; /* Light red for fraud */
+        color: #EE4B2B;
+        font-weight: bolder;
+    }
+    .not-fraud-prediction {
+        background-color: #e0f2f1; /* Light green for not fraud */
+        color: #155724; /* Dark green text color for readability */
+    }
+
+</style>
+
+<h2>Predictions</h2>
+<div class="full-width-table">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>CustomerID</th>
+            <th>Time</th>
+            <th>Amount</th>
+            <th>Day of Week</th>
+            <th>Entry Mode</th>
+            <th>Transaction Type</th>
+            <th>Country of Transaction</th>
+            <th>Shipping Address</th>
+            <th>Bank</th>
+            <th>Type of Card</th>
+            <th>Original Fraud Label</th>
+            <th class="prediction-cell">Prediction</th>
+        </tr>
+        </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Order.CustomerId</td>
+                        <td>@item.Order.Time</td>
+                        <td>@item.Order.Amount</td>
+                        <td>@item.Order.DayOfWeek</td>
+                        <td>@item.Order.EntryMode</td>
+                        <td>@item.Order.TypeOfTransaction</td>
+                        <td>@item.Order.CountryOfTransaction</td>
+                        <td>@item.Order.ShippingAddress</td>
+                        <td>@item.Order.Bank</td>
+                        <td>@item.Order.TypeOfCard</td>
+                        <td>@class_type_dict[(int)item.Order.Fraud]</td>
+                        <td class="@((item.Prediction == "Fraud") ? "fraud-prediction" : "not-fraud-prediction")">@item.Prediction</td>
+                    </tr>
+                }
+            </tbody>
+
+    </table>
+</div>
