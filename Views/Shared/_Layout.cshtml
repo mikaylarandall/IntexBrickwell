@@ -7,9 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - IntexBrickwell</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
-    <link href="css/site.css" rel="stylesheet" asp-append-version="true" />
     <link rel="stylesheet" href="~/IntexBrickwell.styles.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/CookieConsent.css" />
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="css/site.css" rel="stylesheet" />
     <meta name="csrf-token" content="@Antiforgery.GetAndStoreTokens(Context).RequestToken" />
 
 </head>
@@ -18,7 +20,7 @@
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm custom-navbar-color">
         <div class="container-fluid">
-                <img src="~/img/lego.png" style="width: 100px; height: auto;" />
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">IntexBrickwell</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -34,6 +36,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Aboutus">About Brickwell Legos</a>
                         </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ReviewOrders">Orders</a>
+                    </li>
                 </ul>
                 <!-- Invoke the Cart View Component here -->
                 @await Component.InvokeAsync("Cart")
@@ -44,8 +49,7 @@
 
     </nav>
 </header>
-<br />
-<div class="container">
+<div class="container content">
     <main role="main" class="pb-3">
         @RenderBody()
     </main>
