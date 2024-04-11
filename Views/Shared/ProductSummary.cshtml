@@ -5,9 +5,11 @@
 }
 @model Product
 
+<link rel="stylesheet" href="~/css/Products.css" />
 <body>
-    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <div class="col mb-5">
+    <div class="container">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-6 col-md-2 mb-5">
                 <div class="card h-100">
                     <!-- Product image-->
                     <img class="card-img-top" src="@Model.ImgLink" alt="Product Image" />
@@ -28,6 +30,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     </div>
     <script src="js/site.js"></script>
     <script>

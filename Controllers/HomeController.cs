@@ -181,7 +181,6 @@ public class HomeController : Controller
         return View(productData);
     }
 
-
     public IActionResult Index(int page = 1, int pageSize = 4)
     {
         var totalItems = _productRepository.Products.Count();
@@ -250,5 +249,81 @@ public class HomeController : Controller
     public IActionResult Aboutus()
     {
         return View();
+    }
+
+    public IActionResult AdminProducts()
+    {
+        var all = _productRepository.Products
+            .OrderBy(x => x.Name);
+
+        return View("AdminProducts", all);
+    }
+
+    [HttpGet]
+    public IActionResult AddProduct()
+    {
+        return View(new Product());
+    }
+
+    //[HttpPost]
+    //public IActionResult AddProduct(Product p)
+    //{
+    //    if (ModelState.IsValid)
+    //    {
+    //        _productRepository.AddProduct(p);
+    //    }
+
+    //    return RedirectToAction("AdminProducts", new Product());
+
+    //}
+
+    [HttpPost]
+    public IActionResult AddProduct(Product p)
+    {
+        if (ModelState.IsValid)
+        {
+            _productRepository.AddProduct(p);
+            return RedirectToAction("AdminProducts"); // Assuming "AdminProducts" is a view listing all products.
+        }
+
+        // If model state is not valid, return to the form with the current model to show validation errors.
+        return View(p);
+    }
+
+    [HttpGet]
+    public IActionResult Edit(int id)
+    {
+        var record = _productRepository.Products
+             .Single(x => x.ProductId == id);
+
+        return View("AddProduct", record);
+    }
+
+    [HttpPost]
+    public IActionResult Edit(Product product)
+    {
+        if (ModelState.IsValid)
+        {
+            _productRepository.EditProduct(product);
+
+        }
+        return RedirectToAction("AdminProducts");
+    }
+
+    [HttpGet]
+    public IActionResult Delete(int id)
+    {
+        var recordToDelete = _productRepository.Products
+            .Single(x => x.ProductId == id);
+
+        return View(recordToDelete);
+    }
+
+    [HttpPost]
+    public IActionResult Delete(Product product)
+    {
+        _productRepository.DeleteProduct(product);
+
+        return RedirectToAction("AdminProducts");
     }
 }

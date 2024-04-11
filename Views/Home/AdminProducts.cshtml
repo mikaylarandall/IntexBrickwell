@@ -1,0 +1,102 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<Product>
+<style>
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .full-width-table {
+        margin-left: -50px;
+        margin-right: 0;
+    }
+
+    .table {
+        width: auto;
+        margin-bottom: 0;
+    }
+
+    .prediction-cell {
+        background-color: #e0f2f1;
+    }
+
+    .description-container {
+        max-height: 1.2em; /* Adjust based on your font-size to fit one line */
+        overflow: hidden;
+        position: relative;
+    }
+
+    .see-more-btn {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        background-color: #f0f0f0; /* Example background color */
+        border: none;
+        cursor: pointer;
+    }
+
+    /* Class added dynamically to show the full description */
+    .full-description {
+        max-height: none;
+    }
+
+</style>
+
+<h2>All Products</h2>
+<a class="btn btn-primary" asp-controller="Home" asp-action="AddProduct">Add Product</a>
+
+<br /> <br />
+<div class="full-width-table">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Year Made</th>
+                <th>Number of Parts</th>
+                <th>Price</th>
+                <th>Primary Color</th>
+                <th>Secondary Color</th>
+                <th>Description</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Year</td>
+                    <td>@item.NumParts</td>
+                    <td>$@item.Price</td>
+                    <td>@item.PrimaryColor</td>
+                    <td>@item.SecondaryColor</td>
+                    <td>
+                        <div class="description-container">
+                            <div class="short-description">@item.Description</div>
+                            <button class="see-more-btn" onclick="toggleDescription(this)">See More</button>
+                        </div>
+                    </td>
+                    <td>@item.Category</td>
+                    <td><a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@item.ProductId">Edit</a></td>
+                    <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@item.ProductId">Delete</a></td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+    <script>
+        function toggleDescription(button) {
+            var container = button.parentElement;
+            var description = container.querySelector('.short-description');
+            if (container.classList.contains('full-description')) {
+                container.classList.remove('full-description');
+                button.textContent = 'See More';
+            } else {
+                container.classList.add('full-description');
+                button.textContent = 'See Less';
+            }
+        }
+    </script>
