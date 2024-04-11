@@ -16,6 +16,8 @@ public class ApplicationDbContext : IdentityDbContext
     public virtual DbSet<Order> Orders { get; set; }
     public virtual DbSet<Product> Products { get; set; }
     public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<ProductRecommendation> ProductRecommendation { get; set; }
+    public virtual DbSet<CustomerRecommendations> CustomerRecommendations { get; set; }
    //  public virtual DbSet<FraudPrediction> FraudPredictions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -123,6 +125,44 @@ public class ApplicationDbContext : IdentityDbContext
             entity.Property(e => e.UserId).HasColumnName("user_id");
         });
         
+        modelBuilder.Entity<ProductRecommendation>(entity =>
+        {
+            entity.Property(e => e.ProductID).HasColumnName("Product_ID");
+            entity.Property(e => e.ProductName)
+                .HasMaxLength(50)
+                .HasColumnName("Product_Name");
+            entity.Property(e => e.Rec1ID)
+                .HasMaxLength(2800)
+                .HasColumnName("Recommendation_1_ID");
+            entity.Property(e => e.Rec1Name)
+                .HasMaxLength(150)
+                .HasColumnName("Recommendation_1");    
+            entity.Property(e => e.Rec2ID)
+                .HasMaxLength(2800)
+                .HasColumnName("Recommendation_2_ID");
+            entity.Property(e => e.Rec2Name)
+                .HasMaxLength(150)
+                .HasColumnName("Recommendation_2"); 
+            entity.Property(e => e.Rec3ID)
+                .HasMaxLength(2800)
+                .HasColumnName("Recommendation_3_ID");
+            entity.Property(e => e.Rec3Name)
+                .HasMaxLength(150)
+                .HasColumnName("Recommendation_3"); 
+            entity.Property(e => e.Rec4ID)
+                .HasMaxLength(2800)
+                .HasColumnName("Recommendation_4_ID");
+            entity.Property(e => e.Rec4Name)
+                .HasMaxLength(150)
+                .HasColumnName("Recommendation_4"); 
+            entity.Property(e => e.Rec5ID)
+                .HasMaxLength(2800)
+                .HasColumnName("Recommendation_5_ID");
+            entity.Property(e => e.Rec5Name)
+                .HasMaxLength(150)
+                .HasColumnName("Recommendation_5"); 
+        });
+
     }
 }
 

@@ -1,0 +1,10 @@
+@model IEnumerable<CustomerRecommendations>
+
+<h2>Customer Recommendations</h2>
+
+@foreach (var recommendation in Model)
+{
+    <div>
+        <h3>@recommendation.Recommendation_1</h3>
+    </div>
+}
