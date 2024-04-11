@@ -3,23 +3,17 @@
 *@
 @{
 }
-@model IEnumerable<string> // can use IEnumerable as well
+@model IEnumerable<string>
 
 <div class="d-grid gap-2">
+
     <!-- Dropdown Start -->
     <select class="form-select" onchange="window.location.href=this.value;">
-        <option selected>Select Category</option>
+        <option selected>Select Color</option>
         @foreach (string pt in Model ?? Enumerable.Empty<string>())
         {
-            <option value='@Url.Action("Products", "Home", new { productCategory = pt, pageNum = "1" })'>@pt</option>
+            <option value='@Url.Action("Products", "Home", new { productColor = pt, pageNum = "1" })'>@pt</option>
         }
     </select>
     <!-- Dropdown End -->
 </div>
-
-
-
-
-
-
-
