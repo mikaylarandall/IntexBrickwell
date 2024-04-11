@@ -21,6 +21,8 @@ public class HomeController : Controller
     private readonly ILineItemRepository _lineItemRepository;
     private readonly InferenceSession _session;
     private readonly ApplicationDbContext _context;
+    private readonly IRecommendationRepository _recommendationRepository;
+    private readonly ICustomerRecommendationRepository _customerRecommendationRepository;
 
     public HomeController(
         IOrderRepository orderRepository, 
@@ -28,7 +30,9 @@ public class HomeController : Controller
         IUserRepository userRepository,
         ICustomerRepository customerRepository,
         ILineItemRepository lineItemRepository,
-        ApplicationDbContext context)
+        ApplicationDbContext context,
+        IRecommendationRepository recommendationRepository,
+        ICustomerRecommendationRepository customerRecommendationRepository)
     {
         _orderRepository = orderRepository;
         _productRepository = productRepository;
@@ -36,14 +40,17 @@ public class HomeController : Controller
         _customerRepository = customerRepository;
         _lineItemRepository = lineItemRepository;
         _context = context;
+        _recommendationRepository = recommendationRepository;
+        _customerRecommendationRepository = customerRecommendationRepository;
 
         try
         {
+
             // _session = new InferenceSession("/Users/brysonlindsey/Documents/GitHub/IntexBrickwell/decision_tree_model.onnx");
-            // _session = new InferenceSession("C:\\Users\\carolineconley\\Source\\Repos\\IntexBrickwell\\decision_tree_model.onnx");
+            _session = new InferenceSession("C:\\Users\\carolineconley\\Source\\Repos\\IntexBrickwell\\decision_tree_model.onnx");
             
-            _session = new InferenceSession("C:\\Users\\mikaylarandall\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
-            // _session = new InferenceSession("C:\\Users\\Tiffany\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
+            // _session = new InferenceSession("C:\\Users\\mikaylarandall\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
+             // _session = new InferenceSession("C:\\Users\\Tiffany\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
             
         }
         catch (Exception ex)
@@ -206,6 +213,7 @@ public class HomeController : Controller
 
         return View(model);
     }
+
     
     public IActionResult AddToCart(int productID)
     {
@@ -264,6 +272,25 @@ public class HomeController : Controller
     public IActionResult AddProduct()
     {
         return View(new Product());
+    }
+
+
+    [HttpGet]
+    public IActionResult CheckoutForm()
+    {
+        return View(new Order());
+    }
+
+    [HttpPost]
+    public IActionResult CheckoutForm(Order o)
+    {
+        if (ModelState.IsValid)
+        {
+            _orderRepository.AddOrder(o);
+        }
+
+        // If model state is not valid, return to the form with the current model to show validation errors.
+        return View(o);
     }
 
     //[HttpPost]
@@ -326,5 +353,20 @@ public class HomeController : Controller
         _productRepository.DeleteProduct(product);
 
         return RedirectToAction("AdminProducts");
+    }
+    public IActionResult CustomerRecommendation()
+    {
+        var all = _customerRecommendationRepository.CustomerRecommendations
+            .OrderBy(x => x.Customer_ID);
+
+        return View("CustomerRecommendation", all);
+    }
+    
+    public IActionResult ProductRecommendation()
+    {
+        var all = _recommendationRepository.ProductRecommendation
+            .OrderBy(x => x.ProductID);
+
+        return View("ProductRecommendation", all);
     }
 }
