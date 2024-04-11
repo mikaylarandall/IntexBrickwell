@@ -32,9 +32,6 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Aboutus">About Brickwell Legos</a>
                         </li>
@@ -91,6 +88,12 @@
         <button class="btn btn-danger" id="declineCookies">Decline</button>
     </div>
     <script src="~/js/CookieConsent.js"></script> <!-- Path to your JS file -->
+</footer>
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Brickwell Legos 2023</p>
+        <a class="nav-link text-white btn btn-link" style="text-decoration: underline;" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
 </footer>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
