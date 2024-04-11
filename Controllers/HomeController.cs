@@ -158,13 +158,14 @@ public class HomeController : Controller
         return View(predictions);
     }
 
-    public IActionResult Products(int pageNum) // don't ever name pageNum page -- means something to dotnet
+    public IActionResult Products(int pageNum, string? productCategory) // don't ever name pageNum page -- means something to dotnet
     {
-        int pageSize = 5;
+        int pageSize = 20;
 
         var productData = new ProductListViewModel
         {
             Products = _productRepository.Products
+            .Where(x => x.Category == productCategory || productCategory == null)
             .OrderBy(x => x.Name)
             .Skip((pageNum - 1) * pageSize)
             .Take(pageSize),
@@ -173,11 +174,11 @@ public class HomeController : Controller
             {
                 CurrentPage = pageNum,
                 ItemsPerPage = pageSize,
-                TotalItems = _productRepository.Products.Count()
-            }
+                TotalItems = productCategory == null ? _productRepository.Products.Count() : _productRepository.Products.Where(x => x.Category == productCategory).Count()
+            },
 
+            CurrentProductCategory = productCategory
         };
-
         return View(productData);
     }
 

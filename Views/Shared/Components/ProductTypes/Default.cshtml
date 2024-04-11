@@ -1,0 +1,36 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<string> // can use IEnumerable as well
+
+<!--<div class="d-grid gap-2">
+    <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Products" asp-route-productCategory=""
+       asp-route-pageNum="">Home</a>
+    
+    @foreach(string pt in Model ?? Enumerable.Empty<string>())
+    {
+        <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Products" 
+        asp-route-productCategory="@pt" asp-route-pageNum="1">@pt</a>
+    }
+</div>
+<br /><br /> -->
+
+@* <div class="d-grid gap-2">
+    <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Products" asp-route-productCategory=""
+       asp-route-pageNum="">Home</a>
+
+    <!-- Dropdown Start -->
+    <select class="form-select" onchange="window.location.href=this.value;">
+        <option selected>Select Category</option>
+        @foreach (string pt in Model ?? Enumerable.Empty<string>())
+        {
+            <option value='@Url.Action("Products", "Home", new { productCategory = pt, pageNum = "1" })'>@pt</option>
+        }
+    </select>
+    <!-- Dropdown End -->
+</div> *@
+
+
+
