@@ -49,15 +49,19 @@
             {
                 <div class="col mb-5">
                     <div class="card h-100">
-                        <!-- Product image-->
-                        <img class="card-img-top" src="@item.ImgLink" alt="Product Image"/>
+                        <!-- Clickable product image-->
+                        <a href="@Url.Action("Productdetails", "Home", new { productId = item.ProductId })">
+                            <img class="card-img-top" src="@item.ImgLink" alt="Product Image" />
+                        </a>
                         <!-- Product details-->
                         <div class="card-body p-4">
                             <div class="text-center">
-                                <!-- Product name-->
-                                <h5 class="fw-bolder">@item.Name</h5>
+                                <!-- Clickable product name-->
+                                <a href="@Url.Action("Productdetails", "Home", new { productId = item.ProductId })">
+                                    <h5 class="fw-bolder">@item.Name</h5>
+                                </a>
                                 <!-- Product price-->
-                                $@item.Price
+                                <p>$@item.Price</p>
                             </div>
                         </div>
                         <!-- Product actions-->
@@ -70,6 +74,8 @@
                 </div>
             }
         </div>
+    </section>
+
         <!-- Pagination -->
         <div class="d-flex justify-content-center">
             @if (Model.CurrentPage > 1)
