@@ -40,6 +40,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<IntexBrickwell.Data.ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddHsts(options =>
@@ -68,6 +69,7 @@ builder.Services.AddScoped<IProductRepository, EFProductRepository>();
 builder.Services.AddScoped<ICustomerRepository, EFCustomerRepository>();
 builder.Services.AddScoped<ILineItemRepository, EFLineItemRepository>();
 builder.Services.AddScoped<IRecommendationRepository, EFRecommendationRepository>();
+builder.Services.AddScoped<ICustomerRecommendationRepository, EFCustomerRecommendationRepository>();
 
 // Register session services
 builder.Services.AddSession(options =>

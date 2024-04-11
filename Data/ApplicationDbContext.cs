@@ -17,6 +17,7 @@ public class ApplicationDbContext : IdentityDbContext
     public virtual DbSet<Product> Products { get; set; }
     public virtual DbSet<User> Users { get; set; }
     public virtual DbSet<ProductRecommendation> ProductRecommendation { get; set; }
+    public virtual DbSet<CustomerRecommendations> CustomerRecommendations { get; set; }
    //  public virtual DbSet<FraudPrediction> FraudPredictions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -161,7 +162,7 @@ public class ApplicationDbContext : IdentityDbContext
                 .HasMaxLength(150)
                 .HasColumnName("Recommendation_5"); 
         });
-        
+
     }
 }
 

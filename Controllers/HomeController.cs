@@ -22,6 +22,7 @@ public class HomeController : Controller
     private readonly InferenceSession _session;
     private readonly ApplicationDbContext _context;
     private readonly IRecommendationRepository _recommendationRepository;
+    private readonly ICustomerRecommendationRepository _customerRecommendationRepository;
 
     public HomeController(
         IOrderRepository orderRepository, 
@@ -30,7 +31,8 @@ public class HomeController : Controller
         ICustomerRepository customerRepository,
         ILineItemRepository lineItemRepository,
         ApplicationDbContext context,
-        IRecommendationRepository recommendationRepository)
+        IRecommendationRepository recommendationRepository,
+        ICustomerRecommendationRepository customerRecommendationRepository)
     {
         _orderRepository = orderRepository;
         _productRepository = productRepository;
@@ -39,6 +41,7 @@ public class HomeController : Controller
         _lineItemRepository = lineItemRepository;
         _context = context;
         _recommendationRepository = recommendationRepository;
+        _customerRecommendationRepository = customerRecommendationRepository;
 
         try
         {
@@ -274,5 +277,11 @@ public class HomeController : Controller
     {
         var productRecommendations = _recommendationRepository.ProductRecommendation.ToList();
         return View(productRecommendations);
+    }
+    
+    public IActionResult CustomerRecommendation()
+    {
+        var customerRecommendations = _customerRecommendationRepository.CustomerRecommendations.ToList().Take(25);
+        return View(customerRecommendations);
     }
 }
