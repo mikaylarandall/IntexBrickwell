@@ -12450,7 +12450,12 @@ textarea.form-control-lg {
                 background-color: #fff;
                 border-color: #dee2e6;
             }
-            
+            img.myImageClass {
+                width: 100px;
+                height: 100px;
+                /* other styles */
+            }
+
 
 
 }
