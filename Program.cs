@@ -139,8 +139,10 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
+    name: "Default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapControllerRoute("productCategory", "{productCategory}", new { Controller = "Home", action = "Products", pageNum = 1 });
+app.MapControllerRoute("pagination", "Products/{pageNum}", new { Contrller = "Home", action = "Products" });
 app.MapRazorPages();
 
 app.UseMiddleware<CookieConsent>();

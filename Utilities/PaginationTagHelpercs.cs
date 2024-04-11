@@ -59,3 +59,26 @@ namespace IntexBrickwell.Utilities
         }
     }
 }
+
+[HtmlTargetElement("select", Attributes = "model-for, items-source")]
+public class DropdownTagHelper : TagHelper
+{
+    public string ModelFor { get; set; }  // This holds the property name of the model that should be selected.
+    public IEnumerable<SelectListItem> Categories { get; set; }  // The items to be displayed in the dropdown.
+
+    public override void Process(TagHelperContext context, TagHelperOutput output)
+    {
+        output.TagMode = TagMode.StartTagAndEndTag;
+        foreach (var item in Categories)
+        {
+            TagBuilder option = new TagBuilder("option");
+            option.InnerHtml.AppendHtml(item.Text);
+            option.Attributes.Add("value", item.Value);
+            if (item.Value == ModelFor)
+            {
+                option.Attributes.Add("selected", "selected");
+            }
+            output.Content.AppendHtml(option);
+        }
+    }
+}
