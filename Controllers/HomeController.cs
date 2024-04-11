@@ -47,9 +47,9 @@ public class HomeController : Controller
         {
 
             // _session = new InferenceSession("/Users/brysonlindsey/Documents/GitHub/IntexBrickwell/decision_tree_model.onnx");
-            _session = new InferenceSession("C:\\Users\\carolineconley\\Source\\Repos\\IntexBrickwell\\decision_tree_model.onnx");
+            // _session = new InferenceSession("C:\\Users\\carolineconley\\Source\\Repos\\IntexBrickwell\\decision_tree_model.onnx");
             
-            // _session = new InferenceSession("C:\\Users\\mikaylarandall\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
+            _session = new InferenceSession("C:\\Users\\mikaylarandall\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
              // _session = new InferenceSession("C:\\Users\\Tiffany\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
             
         }
@@ -165,29 +165,76 @@ public class HomeController : Controller
         return View(predictions);
     }
 
-    public IActionResult Products(int pageNum, string? productCategory) // don't ever name pageNum page -- means something to dotnet
+
+    //public IActionResult Products(int pageNum, string? productCategory, string? productColor)
+    //{
+    //    int pageSize = 20; // Sets the number of products per page
+
+    //    // Apply filters directly in the LINQ query
+    //    var products = _productRepository.Products
+    //        .Where(x =>
+    //            (string.IsNullOrEmpty(productCategory) || x.Category == productCategory) &&
+    //            (string.IsNullOrEmpty(productColor) || x.PrimaryColor == productColor))
+    //        .OrderBy(x => x.Name)
+    //        .Skip((pageNum - 1) * pageSize)
+    //        .Take(pageSize)
+    //        .ToList();
+
+    //    // Calculate the total number of items after applying filters
+    //    int totalItems = _productRepository.Products
+    //        .Count(x =>
+    //            (string.IsNullOrEmpty(productCategory) || x.Category == productCategory) &&
+    //            (string.IsNullOrEmpty(productColor) || x.PrimaryColor == productColor));
+
+    //    var productData = new ProductListViewModel
+    //    {
+    //        Products = products,
+    //        PaginationInfo = new PaginationInfo
+    //        {
+    //            CurrentPage = pageNum,
+    //            ItemsPerPage = pageSize,
+    //            TotalItems = totalItems
+    //        },
+    //        CurrentProductCategory = productCategory,
+    //        CurrentProductColor = productColor // Assuming your ViewModel supports this property
+    //    };
+
+    //    return View(productData);
+    //}
+
+    public IActionResult Products(int pageNum, string? productCategory, string? productColor, int pageSize = 20)
     {
-        int pageSize = 20;
+        var products = _productRepository.Products
+            .Where(x =>
+                (string.IsNullOrEmpty(productCategory) || x.Category == productCategory) &&
+                (string.IsNullOrEmpty(productColor) || x.PrimaryColor == productColor))
+            .OrderBy(x => x.Name)
+            .Skip((pageNum - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+        int totalItems = _productRepository.Products
+            .Count(x =>
+                (string.IsNullOrEmpty(productCategory) || x.Category == productCategory) &&
+                (string.IsNullOrEmpty(productColor) || x.PrimaryColor == productColor));
 
         var productData = new ProductListViewModel
         {
-            Products = _productRepository.Products
-            .Where(x => x.Category == productCategory || productCategory == null)
-            .OrderBy(x => x.Name)
-            .Skip((pageNum - 1) * pageSize)
-            .Take(pageSize),
-
+            Products = products,
             PaginationInfo = new PaginationInfo
             {
                 CurrentPage = pageNum,
                 ItemsPerPage = pageSize,
-                TotalItems = productCategory == null ? _productRepository.Products.Count() : _productRepository.Products.Where(x => x.Category == productCategory).Count()
+                TotalItems = totalItems
             },
-
-            CurrentProductCategory = productCategory
+            CurrentProductCategory = productCategory,
+            CurrentProductColor = productColor
         };
+
         return View(productData);
     }
+
+
 
     public IActionResult Index(int page = 1, int pageSize = 4)
     {

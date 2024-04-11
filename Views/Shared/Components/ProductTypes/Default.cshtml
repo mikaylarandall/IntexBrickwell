@@ -5,21 +5,9 @@
 }
 @model IEnumerable<string> // can use IEnumerable as well
 
-<!--<div class="d-grid gap-2">
+<div class="d-grid gap-2">
     <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Products" asp-route-productCategory=""
-       asp-route-pageNum="">Home</a>
-    
-    @foreach(string pt in Model ?? Enumerable.Empty<string>())
-    {
-        <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Products" 
-        asp-route-productCategory="@pt" asp-route-pageNum="1">@pt</a>
-    }
-</div>
-<br /><br /> -->
-
-@* <div class="d-grid gap-2">
-    <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Products" asp-route-productCategory=""
-       asp-route-pageNum="">Home</a>
+       asp-route-productColor="" asp-route-pageNum="">Home</a>
 
     <!-- Dropdown Start -->
     <select class="form-select" onchange="window.location.href=this.value;">
@@ -30,7 +18,11 @@
         }
     </select>
     <!-- Dropdown End -->
-</div> *@
+</div>
+
+
+
+
 
 
 

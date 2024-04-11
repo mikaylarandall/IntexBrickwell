@@ -10,6 +10,21 @@
         <vc:product-types />
     </div>
 </div>
+<br />
+<div row m-1 p-1>
+    <div class="col-3">
+        <vc:product-colors />
+    </div>
+</div>
+<br />
+<div row m-1 p-1 float-end>
+    <div class="col-3">
+        <vc:product-size current-page-size="20" />
+    </div>
+</div>
+<br />
+
+
 <body>
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
         @foreach (var item in Model.Products)

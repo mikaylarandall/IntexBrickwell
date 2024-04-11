@@ -142,7 +142,9 @@ app.MapControllerRoute(
     name: "Default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapControllerRoute("productCategory", "{productCategory}", new { Controller = "Home", action = "Products", pageNum = 1 });
-app.MapControllerRoute("pagination", "Products/{pageNum}", new { Contrller = "Home", action = "Products" });
+app.MapControllerRoute("productColor", "{productColor}", new { Controller = "Home", action = "Products", pageNum = 1 });
+app.MapControllerRoute("pageSize", "{pageSize}", new { Controller = "Home", action = "Products", pageNum = 1 });
+app.MapControllerRoute("pagination", "Products/{pageNum}", new { Controller = "Home", action = "Products" });
 app.MapRazorPages();
 
 app.UseMiddleware<CookieConsent>();
