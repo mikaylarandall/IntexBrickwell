@@ -12455,6 +12455,11 @@ textarea.form-control-lg {
                 height: 100px;
                 /* other styles */
             }
+            .product-image {
+                max-width: 100%; /* This ensures the image is never wider than its container */
+                height: auto; /* This ensures the image height maintains its aspect ratio */
+            }
+
 
 
 
