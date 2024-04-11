@@ -416,4 +416,17 @@ public class HomeController : Controller
 
         return View("ProductRecommendation", all);
     }
+
+    
+    public IActionResult Productdetails(int productId)
+    {
+        var product = _productRepository.Products.FirstOrDefault(p => p.ProductId == productId);
+
+        if (product == null)
+        {
+            return NotFound(); // or redirect to another view if you prefer
+        }
+
+        return View(product); // Pass the product to the view
+    }
 }
