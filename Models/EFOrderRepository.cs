@@ -10,4 +10,11 @@ public class EFOrderRepository : IOrderRepository
     }
     
     public IQueryable<Order> Orders => _context.Orders;
+
+    public void AddOrder(Order order)
+    {
+        _context.Add(order);
+        _context.SaveChanges();
+    }
+
 }

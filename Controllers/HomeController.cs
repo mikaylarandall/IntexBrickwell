@@ -273,6 +273,25 @@ public class HomeController : Controller
         return View(new Product());
     }
 
+
+    [HttpGet]
+    public IActionResult CheckoutForm()
+    {
+        return View(new Order());
+    }
+
+    [HttpPost]
+    public IActionResult CheckoutForm(Order o)
+    {
+        if (ModelState.IsValid)
+        {
+            _orderRepository.AddOrder(o);
+        }
+
+        // If model state is not valid, return to the form with the current model to show validation errors.
+        return View(o);
+    }
+
     //[HttpPost]
     //public IActionResult AddProduct(Product p)
     //{
