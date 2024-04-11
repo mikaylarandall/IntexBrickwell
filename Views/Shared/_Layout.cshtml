@@ -13,6 +13,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <link href="css/site.css" rel="stylesheet" />
     <meta name="csrf-token" content="@Antiforgery.GetAndStoreTokens(Context).RequestToken" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 
 </head>
 
@@ -61,7 +63,7 @@
                             <div class="dropdown-menu" aria-labelledby="adminDropdown">
                                 <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="Index">Users</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Role" asp-action="Index">Roles</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Products">Products</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="AdminProducts">Products</a>
                             </div>
                         </li>
                     }
@@ -114,6 +116,9 @@
         }
     });
 </script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
 @await RenderSectionAsync("Scripts", required: false)
 </body>

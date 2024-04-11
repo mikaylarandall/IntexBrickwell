@@ -50,7 +50,7 @@ public class HomeController : Controller
             // _session = new InferenceSession("C:\\Users\\carolineconley\\Source\\Repos\\IntexBrickwell\\decision_tree_model.onnx");
             
             // _session = new InferenceSession("C:\\Users\\mikaylarandall\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
-             _session = new InferenceSession("C:\\Users\\Tiffany\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
+             // _session = new InferenceSession("C:\\Users\\Tiffany\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
             
         }
         catch (Exception ex)
@@ -333,5 +333,20 @@ public class HomeController : Controller
         _productRepository.DeleteProduct(product);
 
         return RedirectToAction("AdminProducts");
+    }
+    public IActionResult CustomerRecommendation()
+    {
+        var all = _customerRecommendationRepository.CustomerRecommendations
+            .OrderBy(x => x.Customer_ID);
+
+        return View("CustomerRecommendation", all);
+    }
+    
+    public IActionResult ProductRecommendation()
+    {
+        var all = _recommendationRepository.ProductRecommendation
+            .OrderBy(x => x.ProductID);
+
+        return View("ProductRecommendation", all);
     }
 }

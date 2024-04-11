@@ -50,43 +50,44 @@
 
 <br /> <br />
 <div class="full-width-table">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Product Name</th>
-                <th>Year Made</th>
-                <th>Number of Parts</th>
-                <th>Price</th>
-                <th>Primary Color</th>
-                <th>Secondary Color</th>
-                <th>Description</th>
-                <th>Category</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.Name</td>
-                    <td>@item.Year</td>
-                    <td>@item.NumParts</td>
-                    <td>$@item.Price</td>
-                    <td>@item.PrimaryColor</td>
-                    <td>@item.SecondaryColor</td>
-                    <td>
-                        <div class="description-container">
-                            <div class="short-description">@item.Description</div>
-                            <button class="see-more-btn" onclick="toggleDescription(this)">See More</button>
-                        </div>
-                    </td>
-                    <td>@item.Category</td>
-                    <td><a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@item.ProductId">Edit</a></td>
-                    <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@item.ProductId">Delete</a></td>
-                </tr>
-            }
-        </tbody>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Product Name</th>
+        <th>Year Made</th>
+        <th>Number of Parts</th>
+        <th>Price</th>
+        <th>Primary Color</th>
+        <th>Secondary Color</th>
+        <th>Description</th>
+        <th>Category</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Year</td>
+            <td>@item.NumParts</td>
+            <td>$@item.Price</td>
+            <td>@item.PrimaryColor</td>
+            <td>@item.SecondaryColor</td>
+            <td>
+                <div class="description-container">
+                    <div class="short-description">@item.Description</div>
+                    <button class="see-more-btn" onclick="toggleDescription(this)">See More</button>
+                </div>
+            </td>
+            <td>@item.Category</td>
+            <td><a class="btn btn-info" asp-controller="Home" asp-action="Edit" asp-route-id="@item.ProductId">Edit</a></td>
+            <td><a class="btn btn-danger" asp-controller="Home" asp-action="Delete" asp-route-id="@item.ProductId">Delete</a></td>
+        </tr>
+    }
+    </tbody>
 
-    </table>
+</table>
+</div>
     <script>
         function toggleDescription(button) {
             var container = button.parentElement;
