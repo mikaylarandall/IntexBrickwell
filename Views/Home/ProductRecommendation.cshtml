@@ -1,4 +1,4 @@
-@model List<IntexBrickwell.Models.ProductRecommendation>
+@model IOrderedEnumerable<ProductRecommendation>
 
 <h2>Product Recommendations</h2>
 
@@ -6,6 +6,5 @@
 {
     <div>
         <h3>@recommendation.ProductName</h3>
-        // Display other properties of each recommendation as needed
     </div>
 }

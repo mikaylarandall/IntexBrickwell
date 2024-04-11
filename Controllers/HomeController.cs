@@ -22,6 +22,7 @@ public class HomeController : Controller
     private readonly InferenceSession _session;
     private readonly ApplicationDbContext _context;
     private readonly IRecommendationRepository _recommendationRepository;
+    private readonly ICustomerRecommendationRepository _customerRecommendationRepository;
 
     public HomeController(
         IOrderRepository orderRepository, 
@@ -30,7 +31,8 @@ public class HomeController : Controller
         ICustomerRepository customerRepository,
         ILineItemRepository lineItemRepository,
         ApplicationDbContext context,
-        IRecommendationRepository recommendationRepository)
+        IRecommendationRepository recommendationRepository,
+        ICustomerRecommendationRepository customerRecommendationRepository)
     {
         _orderRepository = orderRepository;
         _productRepository = productRepository;
@@ -39,6 +41,7 @@ public class HomeController : Controller
         _lineItemRepository = lineItemRepository;
         _context = context;
         _recommendationRepository = recommendationRepository;
+        _customerRecommendationRepository = customerRecommendationRepository;
 
         try
         {
@@ -47,7 +50,7 @@ public class HomeController : Controller
             //_session = new InferenceSession("C:\\Users\\carolineconley\\Source\\Repos\\IntexBrickwell\\decision_tree_model.onnx");
             
             // _session = new InferenceSession("C:\\Users\\mikaylarandall\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
-            // _session = new InferenceSession("C:\\Users\\Tiffany\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
+             // _session = new InferenceSession("C:\\Users\\Tiffany\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
             
         }
         catch (Exception ex)
@@ -185,28 +188,13 @@ public class HomeController : Controller
         return View(productData);
     }
 
-
     public IActionResult Index(int page = 1, int pageSize = 4)
     {
-        // Joining Products with LineItems to calculate average rating
-        var productRatings = _productRepository.Products
-            .GroupJoin(
-                _lineItemRepository.LineItems, // Assuming you have a repository for LineItems
-                product => product.ProductId,
-                lineItem => lineItem.ProductId,
-                (product, lineItems) => new {
-                    Product = product,
-                    AverageRating = lineItems.Average(li => (int?)li.Rating) ?? 0 // Cast to int? to handle possible null ratings and default to 0 if no ratings
-                })
-            .OrderByDescending(pr => pr.AverageRating) // Order by average rating descending
-            .ThenBy(pr => pr.Product.ProductId) // Secondary sort by ProductId for consistent ordering
-            .Select(pr => pr.Product)
-            .Take(8);
-
-        var totalItems = productRatings.Count();
+        var totalItems = _productRepository.Products.Count();
         var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
-        var products = productRatings
+        var products = _productRepository.Products
+            .OrderBy(i => i.ProductId)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToList();
@@ -270,9 +258,95 @@ public class HomeController : Controller
     {
         return View();
     }
+
+    public IActionResult AdminProducts()
+    {
+        var all = _productRepository.Products
+            .OrderBy(x => x.Name);
+
+        return View("AdminProducts", all);
+    }
+
+    [HttpGet]
+    public IActionResult AddProduct()
+    {
+        return View(new Product());
+    }
+
+    //[HttpPost]
+    //public IActionResult AddProduct(Product p)
+    //{
+    //    if (ModelState.IsValid)
+    //    {
+    //        _productRepository.AddProduct(p);
+    //    }
+
+    //    return RedirectToAction("AdminProducts", new Product());
+
+    //}
+
+    [HttpPost]
+    public IActionResult AddProduct(Product p)
+    {
+        if (ModelState.IsValid)
+        {
+            _productRepository.AddProduct(p);
+            return RedirectToAction("AdminProducts"); // Assuming "AdminProducts" is a view listing all products.
+        }
+
+        // If model state is not valid, return to the form with the current model to show validation errors.
+        return View(p);
+    }
+
+    [HttpGet]
+    public IActionResult Edit(int id)
+    {
+        var record = _productRepository.Products
+             .Single(x => x.ProductId == id);
+
+        return View("AddProduct", record);
+    }
+
+    [HttpPost]
+    public IActionResult Edit(Product product)
+    {
+        if (ModelState.IsValid)
+        {
+            _productRepository.EditProduct(product);
+
+        }
+        return RedirectToAction("AdminProducts");
+    }
+
+    [HttpGet]
+    public IActionResult Delete(int id)
+    {
+        var recordToDelete = _productRepository.Products
+            .Single(x => x.ProductId == id);
+
+        return View(recordToDelete);
+    }
+
+    [HttpPost]
+    public IActionResult Delete(Product product)
+    {
+        _productRepository.DeleteProduct(product);
+
+        return RedirectToAction("AdminProducts");
+    }
+    public IActionResult CustomerRecommendation()
+    {
+        var all = _customerRecommendationRepository.CustomerRecommendations
+            .OrderBy(x => x.Customer_ID);
+
+        return View("CustomerRecommendation", all);
+    }
+    
     public IActionResult ProductRecommendation()
     {
-        var productRecommendations = _recommendationRepository.ProductRecommendation.ToList();
-        return View(productRecommendations);
+        var all = _recommendationRepository.ProductRecommendation
+            .OrderBy(x => x.ProductID);
+
+        return View("ProductRecommendation", all);
     }
 }

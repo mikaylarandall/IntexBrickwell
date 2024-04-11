@@ -1,0 +1,53 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Product
+<head>
+    <link href="~/lib/bootstrap/dist/css/bootstrap-reboot.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap-reboot.rtl.min.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap-reboot.rtl.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap-reboot.css" rel="stylesheet" />
+</head>
+
+<h1>Add a Product</h1>
+<form method="post">
+    <input type="hidden" asp-for="ProductId" />
+    <div class="form-group">
+        <label asp-for="Name">Product Name:</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Year">Year Created:</label>
+        <input asp-for="Year" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="NumParts">Number of Parts:</label>
+        <input asp-for="NumParts" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Price">Price:</label>
+        <input asp-for="Price" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="PrimaryColor">Primary Color:</label>
+        <input asp-for="PrimaryColor" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="SecondaryColor">Secondary Color:</label>
+        <input asp-for="SecondaryColor" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Description">Description:</label>
+        <input asp-for="Description" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Category">Category:</label>
+        <input asp-for="Category" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Product</button>
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+</form>

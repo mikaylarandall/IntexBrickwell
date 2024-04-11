@@ -5,12 +5,52 @@
 }
 @model ProductListViewModel
 
-@foreach (Product p in Model.Products)
-{
-    <partial name="ProductSummary" model="p" />
-}
+<body>
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        @foreach (var item in Model.Products)
+        {
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <!-- Product image-->
+                    <img class="card-img-top" src="@item.ImgLink" alt="Product Image" />
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder">@item.Name</h5>
+                            <!-- Product price-->
+                            $@item.Price
+                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center">
+                            <button class="btn btn-outline-dark mt-auto add-to-cart-btn" data-item-id="@item.ProductId">Add to cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const itemId = this.getAttribute('data-item-id');
+                    fetch(`/Home/AddToCart?productID=${itemId}`, { method: 'POST' })
+                        .then(response => response.json())
+                        .then(data => {
+                            document.getElementById('cart-quantity').innerText = data.cartItemCount;
+                        })
+                        .catch(error => console.error('Error adding item:', error));
 
+                });
+            });
+        });
+    </script>
+</body>
 
-<div page-model="@Model.PaginationInfo" page-action="Index" page-class-enabled="true" page-class="btn"
+<div page-model="@Model.PaginationInfo" page-action="Products" page-class-enabled="true" page-class="btn"
      page-class-normal="btn-outline-dark" page-class-selected="btn-primary" class="btn-group pull-right m-1"></div>
 
