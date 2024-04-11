@@ -6,9 +6,6 @@
 @model IEnumerable<string> // can use IEnumerable as well
 
 <div class="d-grid gap-2">
-    <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Products" asp-route-productCategory=""
-       asp-route-productColor="" asp-route-pageNum="">Home</a>
-
     <!-- Dropdown Start -->
     <select class="form-select" onchange="window.location.href=this.value;">
         <option selected>Select Category</option>

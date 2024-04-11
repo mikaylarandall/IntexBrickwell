@@ -5,23 +5,32 @@
 }
 @model ProductListViewModel
 
-<div row m-1 p-1>
-    <div class="col-3">
-        <vc:product-types />
+<div class="container">
+    <div class="container">
+        <div class="row">
+            <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Products" asp-route-productCategory=""
+               asp-route-productColor="" asp-route-pageNum="">Home</a>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+
+
+        <div class="col-4">
+            <vc:product-types />
+        </div>
+
+        <div class="col-4">
+            <vc:product-colors />
+        </div>
+        <div class="col-4">
+            <vc:product-size current-page-size="20" />
+        </div>
     </div>
 </div>
-<br />
-<div row m-1 p-1>
-    <div class="col-3">
-        <vc:product-colors />
-    </div>
-</div>
-<br />
-<div row m-1 p-1 float-end>
-    <div class="col-3">
-        <vc:product-size current-page-size="20" />
-    </div>
-</div>
+
 <br />
 
 
