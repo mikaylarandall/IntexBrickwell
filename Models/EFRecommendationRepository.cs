@@ -11,4 +11,11 @@ public class EFRecommendationRepository : IRecommendationRepository
         _context = temp;
     }
     public IEnumerable<ProductRecommendation> ProductRecommendation => _context.ProductRecommendation;
+    
+    public ProductRecommendation GetProductRecommendations(byte productId)
+    {
+        return _context.ProductRecommendation
+            .FirstOrDefault(pr => pr.ProductID == productId);
+    }
+
 }
