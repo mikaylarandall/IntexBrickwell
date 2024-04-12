@@ -47,10 +47,10 @@ public class HomeController : Controller
         {
 
             // _session = new InferenceSession("/Users/brysonlindsey/Documents/GitHub/IntexBrickwell/decision_tree_model.onnx");
-            // _session = new InferenceSession("C:\\Users\\carolineconley\\Source\\Repos\\IntexBrickwell\\decision_tree_model.onnx");
+             _session = new InferenceSession("C:\\Users\\carolineconley\\Source\\Repos\\IntexBrickwell\\decision_tree_model.onnx");
             
             //_session = new InferenceSession("C:\\Users\\mikaylarandall\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
-            _session = new InferenceSession("C:\\Users\\Tiffany\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
+            // _session = new InferenceSession("C:\\Users\\Tiffany\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
             
         }
         catch (Exception ex)
