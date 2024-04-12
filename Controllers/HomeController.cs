@@ -8,7 +8,8 @@ using System.Linq;
 using Microsoft.ML;
 using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
-    
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace IntexBrickwell.Controllers;
 
@@ -49,8 +50,8 @@ public class HomeController : Controller
             // _session = new InferenceSession("/Users/brysonlindsey/Documents/GitHub/IntexBrickwell/decision_tree_model.onnx");
             // _session = new InferenceSession("C:\\Users\\carolineconley\\Source\\Repos\\IntexBrickwell\\decision_tree_model.onnx");
             
-            _session = new InferenceSession("C:\\Users\\mikaylarandall\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
-             // _session = new InferenceSession("C:\\Users\\Tiffany\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
+            //_session = new InferenceSession("C:\\Users\\mikaylarandall\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
+            //_session = new InferenceSession("C:\\Users\\Tiffany\\source\\repos\\IntexBrickwell\\decision_tree_model.onnx");
             
         }
         catch (Exception ex)
@@ -111,7 +112,11 @@ public class HomeController : Controller
         return View("Index");
 
     }
+<<<<<<< HEAD
 
+=======
+    [Authorize(Roles = "Admin")]
+>>>>>>> 494bf954b81c3d7c4e32fa852edf258cd766850d
     public IActionResult ReviewOrders()
     {
         var records = _context.Orders.ToList();
@@ -252,6 +257,10 @@ public class HomeController : Controller
         return Json(new { cartItemCount = cart.CartItems.Sum(c => c.Quantity) });
     }
 
+<<<<<<< HEAD
+=======
+ 
+>>>>>>> 494bf954b81c3d7c4e32fa852edf258cd766850d
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult CheckoutCart()
@@ -312,6 +321,7 @@ public class HomeController : Controller
         return View();
     }
 
+    [Authorize(Roles = "Admin")]
     public IActionResult AdminProducts()
     {
         var all = _productRepository.Products
@@ -326,13 +336,14 @@ public class HomeController : Controller
         return View(new Product());
     }
 
-
+    [Authorize(Roles = "Customer")]
     [HttpGet]
     public IActionResult CheckoutForm()
     {
         return View(new Order());
     }
 
+    [Authorize(Roles = "Customer")]
     [HttpPost]
     public IActionResult CheckoutForm(Order o)
     {
@@ -357,6 +368,7 @@ public class HomeController : Controller
 
     //}
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public IActionResult AddProduct(Product p)
     {
@@ -370,6 +382,7 @@ public class HomeController : Controller
         return View(p);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public IActionResult Edit(int id)
     {
@@ -379,6 +392,7 @@ public class HomeController : Controller
         return View("AddProduct", record);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public IActionResult Edit(Product product)
     {
@@ -390,6 +404,7 @@ public class HomeController : Controller
         return RedirectToAction("AdminProducts");
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public IActionResult Delete(int id)
     {
@@ -399,6 +414,7 @@ public class HomeController : Controller
         return View(recordToDelete);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public IActionResult Delete(Product product)
     {
