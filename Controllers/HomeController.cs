@@ -228,7 +228,6 @@ public class HomeController : Controller
         return View(model);
     }
 
-    
     public IActionResult AddToCart(int productID)
     {
         var product = _productRepository.Products.FirstOrDefault(i => i.ProductId == productID);
@@ -256,11 +255,8 @@ public class HomeController : Controller
         // For AJAX: Return JSON including the updated cart item count
         return Json(new { cartItemCount = cart.CartItems.Sum(c => c.Quantity) });
     }
+    
 
-<<<<<<< HEAD
-=======
- 
->>>>>>> 494bf954b81c3d7c4e32fa852edf258cd766850d
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult CheckoutCart()
