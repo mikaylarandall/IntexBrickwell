@@ -140,7 +140,7 @@ public class HomeController : Controller
                 }
                 else
                 {
-                    ViewBag.Prediction = "Error: Unable to make prediction.";
+                    ViewBag.Prediction = "Error: Unable to make prediction."; 
                 
                 }
             }
