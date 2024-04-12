@@ -10,6 +10,38 @@
  * Copyright 2011-2022 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+
+/* Body and General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif; /* Fallback font */
+    background-color: #f4f4f4; /* Light grey background */
+}
+
+/* Header Styles */
+.main-header {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: transparent; /* No background color */
+}
+
+.main-header h1 {
+    font-family: 'Bungee', cursive; /* Fun, bold font for the Lego theme */
+    font-size: 48px; /* Large font size for impact */
+    color: #333; /* Dark grey color for contrast */
+    margin: 0 0 10px; /* Spacing below the heading */
+    font-weight: bold; /* Extra bold */
+}
+
+.main-header p {
+    font-size: 24px; /* Substantial size for subheading */
+    color: #555; /* Slightly lighter than the heading for hierarchy */
+    margin: 0; /* Remove default margin */
+}
+
 :root {
     --bs-blue: #0d6efd;
     --bs-indigo: #6610f2;

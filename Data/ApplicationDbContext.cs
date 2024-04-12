@@ -61,7 +61,11 @@ public class ApplicationDbContext : IdentityDbContext<AppUser>
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasNoKey();
+            modelBuilder.Entity<Order>().HasKey(o => o.TransactionId);
+            
+            modelBuilder.Entity<Order>()
+                .Property(o => o.TransactionId)
+                .ValueGeneratedOnAdd(); 
 
             entity.Property(e => e.Amount).HasColumnName("amount");
             entity.Property(e => e.Bank)

@@ -20,6 +20,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/site.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
@@ -57,32 +59,19 @@
     </style>
 
 
-    <header style="background-color: #90cb84;" class="py-5">
-        <div class="container px-3 px-lg-5 my-5">
-            <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">Welcome to Brickwell Legos!</h1>
-                <p class="lead fw-normal text-white-50 mb-0">Find your favorite Lego sets here. Let the building begin!</p>
-            </div>
-        </div>
-    </header>
-
-    
-    <div class="container px-4 px-lg-5 my-5" style="background-color: #f8aed1;">
-        <br/>
-        <div class="text-center text-white">
-            <h1 class="display-8 fw-bolder">About Aurora Brickwell</h1>
-            <p class="lead fw-normal text-white-50 mb-0">Ever since Aurora was a little girl, she knew that she wanted to be a creative. Legos were her first toy that she fell in love with and she hopes you fall in love with Legos too.</p>
-        </div>
-        <br />
-        
-        <div class="text-center">
-            <a class="btn btn-primary bg-white text-dark" asp-area="" asp-controller="Home" asp-action="Aboutus">About Brickwell Legos</a>
-        </div>
-        <br />
+<header style="padding-top: 40px; padding-bottom: 40px; background-color: transparent; text-align: center;">
+    <div class="container">
+        <h1 style="font-family: 'Bungee', cursive; font-size: 72px; color: #333; font-weight: bold; margin-bottom: 10px;">
+            Welcome to Brickwell Legos!
+        </h1>
+        <p style="font-size: 32px; font-weight: bold; color: #555; margin: 0;">
+            Find your favorite Lego sets here. Let the building begin!
+        </p>
     </div>
+</header>
     <!-- Section for displaying items -->
     <section class="py-5">
-        <h2>Featured Sets</h2>
+        <h2 style="font-family: 'Bungee', cursive;">Featured Sets</h2>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             @foreach (var item in Model.Products)
             {
@@ -114,7 +103,7 @@
             }
         </div>
     </section>
-
+    <section class="py-5">
         <!-- Pagination -->
         <div class="d-flex justify-content-center">
             @if (Model.CurrentPage > 1)
@@ -138,6 +127,20 @@
             }
         </div>
     </section>
+    
+        <div class="container px-4 px-lg-5 my-5" style="background-color: #f8aed1;">
+            <br/>
+            <div class="text-center text-white">
+                <h1 class="display-8 fw-bolder">About Aurora Brickwell</h1>
+                <p class="lead fw-normal text-white-50 mb-0">Ever since Aurora was a little girl, she knew that she wanted to be a creative. Legos were her first toy that she fell in love with and she hopes you fall in love with Legos too.</p>
+            </div>
+            <br />
+            
+            <div class="text-center">
+                <a class="btn btn-primary bg-white text-dark" asp-area="" asp-controller="Home" asp-action="Aboutus">About Brickwell Legos</a>
+            </div>
+            <br />
+        </div>
     <!-- Footer-->
 
     <!-- Bootstrap core JS-->

@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IntexBrickwell.Models;
 
 public partial class Order
 {
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int TransactionId { get; set; }
 
     public int CustomerId { get; set; }
@@ -28,6 +33,7 @@ public partial class Order
     public string? Bank { get; set; }
 
     public string? TypeOfCard { get; set; }
-
+    
+    [DefaultValue(0)]
     public int? Fraud { get; set; }
 }
