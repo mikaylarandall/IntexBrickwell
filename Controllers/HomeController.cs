@@ -111,7 +111,7 @@ public class HomeController : Controller
         return View("Index");
 
     }
-    
+
     public IActionResult ReviewOrders()
     {
         var records = _context.Orders.ToList();
@@ -165,43 +165,6 @@ public class HomeController : Controller
         return View(predictions);
     }
 
-
-    //public IActionResult Products(int pageNum, string? productCategory, string? productColor)
-    //{
-    //    int pageSize = 20; // Sets the number of products per page
-
-    //    // Apply filters directly in the LINQ query
-    //    var products = _productRepository.Products
-    //        .Where(x =>
-    //            (string.IsNullOrEmpty(productCategory) || x.Category == productCategory) &&
-    //            (string.IsNullOrEmpty(productColor) || x.PrimaryColor == productColor))
-    //        .OrderBy(x => x.Name)
-    //        .Skip((pageNum - 1) * pageSize)
-    //        .Take(pageSize)
-    //        .ToList();
-
-    //    // Calculate the total number of items after applying filters
-    //    int totalItems = _productRepository.Products
-    //        .Count(x =>
-    //            (string.IsNullOrEmpty(productCategory) || x.Category == productCategory) &&
-    //            (string.IsNullOrEmpty(productColor) || x.PrimaryColor == productColor));
-
-    //    var productData = new ProductListViewModel
-    //    {
-    //        Products = products,
-    //        PaginationInfo = new PaginationInfo
-    //        {
-    //            CurrentPage = pageNum,
-    //            ItemsPerPage = pageSize,
-    //            TotalItems = totalItems
-    //        },
-    //        CurrentProductCategory = productCategory,
-    //        CurrentProductColor = productColor // Assuming your ViewModel supports this property
-    //    };
-
-    //    return View(productData);
-    //}
-
     public IActionResult Products(int pageNum, string? productCategory, string? productColor, int pageSize = 20)
     {
         var products = _productRepository.Products
@@ -233,7 +196,6 @@ public class HomeController : Controller
 
         return View(productData);
     }
-
 
 
     public IActionResult Index(int page = 1, int pageSize = 4)
@@ -289,6 +251,7 @@ public class HomeController : Controller
         // For AJAX: Return JSON including the updated cart item count
         return Json(new { cartItemCount = cart.CartItems.Sum(c => c.Quantity) });
     }
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult CheckoutCart()
@@ -297,6 +260,48 @@ public class HomeController : Controller
         ViewBag.CartItemCount = cart.CartItems.Sum(item => item.Quantity);
         return View(cart);
     }
+
+    public CartViewModel Cart
+    {
+        get
+        {
+            var cart = HttpContext.Session.GetObjectFromJson<CartViewModel>("Cart");
+            if (cart == null)
+            {
+                cart = new CartViewModel { CartItems = new List<CartItem>() };
+                HttpContext.Session.SetObjectAsJson("Cart", cart);  // Initialize session with new cart
+            }
+            return cart;
+        }
+        set
+        {
+            HttpContext.Session.SetObjectAsJson("Cart", value);
+        }
+    }
+
+    [HttpPost]
+    public IActionResult RemoveProduct(int productId)
+    {
+        var cart = HttpContext.Session.GetObjectFromJson<CartViewModel>("Cart") ?? new CartViewModel();
+        var itemToRemove = cart.CartItems.FirstOrDefault(x => x.ProductId == productId);
+        if (itemToRemove != null)
+        {
+            cart.CartItems.Remove(itemToRemove);
+            HttpContext.Session.SetObjectAsJson("Cart", cart);
+            return Json(new { cartItemCount = cart.CartItems.Sum(c => c.Quantity) });
+        }
+        return BadRequest("Item not found.");
+    }
+
+    //public IActionResult RemoveProduct(int productId)
+    //{
+    //    var cart = HttpContext.Session.GetObjectFromJson<CartViewModel>("Cart") ?? new CartViewModel { CartItems = new List<CartItem>() };
+    //    Cart.RemoveLine(Cart.CartItems.First(x => x.Product.ProductId == productId).Product);
+    //    Cart = Cart;
+    //    HttpContext.Session.SetObjectAsJson("Cart", cart);
+
+    //    return RedirectToAction("CheckoutCart");
+    //}
 
     public IActionResult Privacy()
     {

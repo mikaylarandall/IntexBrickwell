@@ -8,6 +8,7 @@
 <html lang="en">
 <head>
     <!-- head contents (omitted for brevity) -->
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 
 <body>
@@ -40,13 +41,16 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach (var item in Model.CartItems)
+                            @foreach (var item in Model.CartItems)
                     {
                         <tr>
                             <td>@item.ItemName</td>
                             <td>$@item.ItemPrice</td>
                             <td>@item.Quantity</td>
-                            <td>$@(item.ItemPrice * item.Quantity)</td>
+                            <td class="item-total">$@(item.ItemPrice * item.Quantity)</td>
+                            <td>
+                                <button type="submit" class="btn btn-sm btn-danger remove-from-cart-btn" data-item-id="@item.ProductId">Remove</button>
+                            </td>
                         </tr>
                     }
                     </tbody>
@@ -88,24 +92,70 @@
 </div>
 
     <script>
+        // function updateTotal() {
+        //     var subtotalElement = document.getElementById('subtotal');
+        //     var subtotal = parseFloat(subtotalElement.textContent.replace('$', ''));
+        //     var shippingCost = parseFloat(document.querySelector('input[name="shipping"]:checked').value);
+        //     var total = subtotal + shippingCost;
+        //     var totalElement = document.getElementById('total');
+        //     totalElement.textContent = '$' + total.toFixed(2);
+        // }
+
+        // document.querySelectorAll('input[name="shipping"]').forEach(function (radio) {
+        //     radio.addEventListener('change', updateTotal);
+        // });
+
+        // updateTotal();
         function updateTotal() {
+            var subtotal = 0;
+            // Ensure you're selecting an element that exists and is updated when items are removed.
+            document.querySelectorAll('.item-total').forEach(item => {
+                subtotal += parseFloat(item.textContent.replace('$', ''));
+            });
             var subtotalElement = document.getElementById('subtotal');
-            var subtotal = parseFloat(subtotalElement.textContent.replace('$', ''));
+            subtotalElement.textContent = '$' + subtotal.toFixed(2);
+
             var shippingCost = parseFloat(document.querySelector('input[name="shipping"]:checked').value);
             var total = subtotal + shippingCost;
             var totalElement = document.getElementById('total');
             totalElement.textContent = '$' + total.toFixed(2);
         }
-
-        document.querySelectorAll('input[name="shipping"]').forEach(function (radio) {
-            radio.addEventListener('change', updateTotal);
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.remove-from-cart-btn').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const button = this;
+                    const itemId = this.getAttribute('data-item-id');
+                    fetch(`/Home/RemoveProduct?productId=${itemId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ productId: itemId })
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                return response.json();
+                            }
+                            throw new Error('Something went wrong on the server!');
+                        })
+                        .then(data => {
+                            // Remove the row from the table
+                            button.closest('tr').remove();
+                            // Update cart item count in the top right corner
+                            document.getElementById('cart-quantity').innerText = data.cartItemCount;
+                            // Call updateTotal() here after the item is removed and cart item count is updated
+                            updateTotal();
+                        })
+                        .catch(error => console.error('Error removing item:', error));
+                });
+            });
         });
 
-        updateTotal();
+
     </script>
 </body>
-
-
-
 
 </html>

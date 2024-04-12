@@ -127,10 +127,6 @@ app.Use(async (context, next) =>
     await next();
 });
 
-
-
-
-
 app.UseSession(); // This line must be added before UseRouting()
 
 app.UseRouting();
