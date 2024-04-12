@@ -20,7 +20,7 @@
 
 <body>
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm custom-navbar-color" style="background-color: #FFD700;">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm custom-navbar-color" style="background-color: #FFD700; font-family: 'Bungee';">
         <div class="container-fluid">
                 <img src="~/img/lego.png" style="width: 100px; height: auto;" />
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -35,18 +35,10 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Aboutus">About Brickwell Legos</a>
                         </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ReviewOrders">Orders</a>
-                    </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Products">Products</a>
                         </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ProductRecommendation">Recommend</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="CustomerRecommendation">CustRecommend</a>
-                    </li>
+
                     @if (User.IsInRole("Admin"))
                     {
                         <li class="nav-item dropdown">
@@ -58,6 +50,7 @@
                                 <a class="dropdown-item" asp-area="" asp-controller="Admin" asp-action="Index">Users</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Role" asp-action="Index">Roles</a>
                                 <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="AdminProducts">Products</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ReviewOrders">Orders</a>
                             </div>
                         </li>
                     }

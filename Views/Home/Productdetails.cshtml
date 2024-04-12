@@ -8,14 +8,16 @@
 
 @model ProductDetailsViewModel
 @* Assuming your product model is called 'Product' *@
-
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+</head>
 <!-- Display product details -->
 <body>
 <div class="product-detail-container" style="text-align: center;">
     <h2>@Model.Product.Name</h2>
     <img class="card-img-top" src="@Model.Product.ImgLink" alt="Product Image" style="max-width: 400px; height: auto;"/>
-    <p>Price: $@Model.Product.Price</p>
-    <p>Description: @Model.Product.Description</p>
+    <h3 font-weight="bold">Price: $@Model.Product.Price</h3>
+    <p>@Model.Product.Description</p>
     <!-- Add more product details as needed -->
     <!-- Product actions-->
     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">

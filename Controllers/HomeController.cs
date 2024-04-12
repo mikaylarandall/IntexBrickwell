@@ -325,8 +325,7 @@ public IActionResult Index(int page = 1, int pageSize = 4)
                 customerRecommendations.Recommendation_1,
                 customerRecommendations.Recommendation_2,
                 customerRecommendations.Recommendation_3,
-                customerRecommendations.Recommendation_4,
-                customerRecommendations.Recommendation_5
+                customerRecommendations.Recommendation_4
             }.Where(name => !string.IsNullOrEmpty(name)).ToList();
 
             var products = _productRepository.GetProductsByNames(recommendedProductNames);
@@ -681,7 +680,6 @@ public IActionResult FraudulentPurchase(int orderId)
             recommendedProducts.Add(_productRepository.Products.FirstOrDefault(p => p.ProductId == recommendations.Rec2ID));
             recommendedProducts.Add(_productRepository.Products.FirstOrDefault(p => p.ProductId == recommendations.Rec3ID));
             recommendedProducts.Add(_productRepository.Products.FirstOrDefault(p => p.ProductId == recommendations.Rec4ID));
-            recommendedProducts.Add(_productRepository.Products.FirstOrDefault(p => p.ProductId == recommendations.Rec5ID));
         }
 
         var viewModel = new ProductDetailsViewModel
