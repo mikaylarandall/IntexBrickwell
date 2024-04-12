@@ -344,8 +344,7 @@ public IActionResult Index(int page = 1, int pageSize = 4)
         }
     }
 
-<<<<<<< HEAD
-=======
+
     // Logic for non-authenticated users or if no recommendations are found
     // Fetch top-rated products based on average ratings
     var topRatedProducts = _productRepository.GetTopRatedProducts(pageSize * page).Skip((page - 1) * pageSize).Take(pageSize);
@@ -365,10 +364,6 @@ public IActionResult Index(int page = 1, int pageSize = 4)
     return View(defaultModel);
 }
 
-
-
-    
->>>>>>> f73b3feebb4f67b06ed9f5a57fbb9e4c2bcceef1
     public IActionResult AddToCart(int productID)
     {
         var product = _productRepository.Products.FirstOrDefault(i => i.ProductId == productID);
@@ -396,11 +391,7 @@ public IActionResult Index(int page = 1, int pageSize = 4)
         // For AJAX: Return JSON including the updated cart item count
         return Json(new { cartItemCount = cart.CartItems.Sum(c => c.Quantity) });
     }
-<<<<<<< HEAD
-    
 
-=======
->>>>>>> f73b3feebb4f67b06ed9f5a57fbb9e4c2bcceef1
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult CheckoutCart()
