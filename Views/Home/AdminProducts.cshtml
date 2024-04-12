@@ -8,7 +8,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
 </head>
 <style>
-    .table-responsive {
+   /*  .table-responsive {
         overflow-x: auto;
     }
 
@@ -20,7 +20,7 @@
     .table {
         width: auto;
         margin-bottom: 0;
-    }
+    } */
 
     .prediction-cell {
         background-color: #e0f2f1;
@@ -52,7 +52,7 @@
 <a class="btn btn-primary" asp-controller="Home" asp-action="AddProduct">Add Product</a>
 
 <br /> <br />
-<div class="full-width-table">
+<div class="table table-sm table-bordered">
 <table class="table">
     <thead>
     <tr>
@@ -64,6 +64,8 @@
         <th>Secondary Color</th>
         <th>Description</th>
         <th>Category</th>
+        <th>Update</th>
+        <th>Delete</th>
     </tr>
     </thead>
     <tbody>
