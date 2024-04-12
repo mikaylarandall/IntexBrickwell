@@ -40,7 +40,7 @@ public class EFProductRepository : IProductRepository
             .OrderByDescending(p => p.AverageRating)
             .Take(count)
             .Select(p => p.Product)
-            .ToList();
+            .ToList(); 
 
         return topRatedProducts;
     }
