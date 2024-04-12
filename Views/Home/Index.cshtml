@@ -1,6 +1,11 @@
 ﻿@using IntexBrickwell.Utilities
 @model HomePageViewModel
 
+@{
+    ViewData["Title"] = "Home";
+}
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +23,40 @@
 </head>
 
 <body>
+    <style>
+        .btn-primary {
+            background-color: #ffcf00; /* Lego yellow */
+            border-color: #ffcf00;
+        }
+
+            .btn-primary:hover {
+                background-color: #e5b900;
+                border-color: #e5b900;
+            }
+
+        .btn-outline-dark {
+            border-color: #333;
+            color: #333;
+        }
+
+            .btn-outline-dark:hover {
+                background-color: #333;
+                color: #fff;
+            }
+
+        .pagination .btn-secondary.disabled {
+            color: #fff;
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+        .pagination .btn {
+            margin: 0 5px;
+        }
+
+    </style>
+
+
     <header style="background-color: #90cb84;" class="py-5">
         <div class="container px-3 px-lg-5 my-5">
             <div class="text-center text-white">
@@ -122,5 +161,6 @@
             });
         });
     </script>
+
 </body>
 </html>
