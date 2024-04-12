@@ -109,14 +109,18 @@
             </style>
 
 
-            <div class="row">
-                <div class="col">
-                    <a class="link-button" asp-area="" asp-controller="Home" asp-action="Products">Continue Shopping</a>
-                </div>
-                <div class="col">
-                    <a class="link-button" asp-area="" asp-controller="Home" asp-action="CheckoutForm">Proceed to Checkout</a>
-                </div>
-            </div>
+<div class="row">
+    <div class="col">
+        <a class="link-button" asp-area="" asp-controller="Home" asp-action="Products">Continue Shopping</a>
+    </div>
+    <div class="col">
+        <!-- Change this link to a form to submit the total -->
+        <form asp-action="CheckoutForm" asp-controller="Home" method="post">
+            <input type="hidden" name="totalAmount" id="totalAmount" value="@Model.TotalPrice" />
+            <button type="button" class="link-button" onclick="proceedToCheckout()">Proceed to Checkout</button>
+        </form>
+    </div>
+</div>
 
     </div>
 </div>
@@ -138,20 +142,22 @@
         // updateTotal();
         function updateTotal() {
             var subtotal = 0;
-            // Ensure you're selecting an element that exists and is updated when items are removed.
             document.querySelectorAll('.item-total').forEach(item => {
                 subtotal += parseFloat(item.textContent.replace('$', ''));
             });
             var subtotalElement = document.getElementById('subtotal');
             subtotalElement.textContent = '$' + subtotal.toFixed(2);
-
+        
             var shippingCost = parseFloat(document.querySelector('input[name="shipping"]:checked').value);
             var total = subtotal + shippingCost;
             var totalElement = document.getElementById('total');
             totalElement.textContent = '$' + total.toFixed(2);
+        
+            // Update the hidden input for the total amount
+            document.getElementById('totalAmount').value = total.toFixed(2);
         }
     </script>
-    <script>
+<script>
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.remove-from-cart-btn').forEach(button => {
                 button.addEventListener('click', function (e) {
@@ -184,6 +190,13 @@
             });
         });
 
+
+    </script>
+    <script>
+        function proceedToCheckout() {
+            var totalAmount = document.getElementById('totalAmount').value;
+            window.location.href = `/Home/CheckoutForm?totalAmount=${totalAmount}`;
+        }
 
     </script>
 </body>
