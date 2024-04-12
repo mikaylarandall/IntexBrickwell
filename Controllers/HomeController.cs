@@ -8,7 +8,8 @@ using System.Linq;
 using Microsoft.ML;
 using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
-    
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace IntexBrickwell.Controllers;
 
@@ -289,6 +290,8 @@ public class HomeController : Controller
         // For AJAX: Return JSON including the updated cart item count
         return Json(new { cartItemCount = cart.CartItems.Sum(c => c.Quantity) });
     }
+
+ 
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult CheckoutCart()
@@ -321,7 +324,7 @@ public class HomeController : Controller
         return View(new Product());
     }
 
-
+    [Authorize(Roles = "Customer")]
     [HttpGet]
     public IActionResult CheckoutForm()
     {
